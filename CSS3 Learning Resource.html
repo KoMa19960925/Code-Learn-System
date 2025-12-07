@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Learning Resources</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto;
+            opacity: 0.9;
+        }
+
+        .category {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .category-title {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #eaeaea;
+        }
+
+        .category-icon {
+            font-size: 28px;
+            margin-right: 15px;
+            background: #095e2a;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .category-title h2 {
+            color: #095e2a;
+            font-weight: 600;
+            font-size: 1.8rem;
+        }
+
+        .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .resource-card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            padding: 25px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .resource-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #095e2a, #0a8c40);
+        }
+
+        .resource-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .resource-card h3 {
+            color: #095e2a;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        .resource-card p {
+            color: #555;
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+
+        .resource-link {
+            display: inline-block;
+            background-color: #095e2a;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background-color 0.3s ease;
+            text-align: center;
+            width: 100%;
+        }
+
+        .resource-link:hover {
+            background-color: #0a3604;
+        }
+
+        .difficulty {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-bottom: 10px;
+        }
+
+        .beginner {
+            background-color: #e8f6f3;
+            color: #27ae60;
+        }
+
+        .intermediate {
+            background-color: #e8f4fd;
+            color: #3498db;
+        }
+
+        .advanced {
+            background-color: #fdedec;
+            color: #e74c3c;
+        }
+
+        .resource-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+            color: #777;
+        }
+
+        .resource-type {
+            font-weight: 500;
+        }
+
+
+        @media (max-width: 768px) {
+            .resources-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            header h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="category">
+        <div class="category-title">
+            <span class="category-icon">🎨</span>
+            <h2>CSS3 Tutorials & Learning Platforms</h2>
+        </div>
+        <div class="resources-grid">
+            <div class="resource-card">
+                <div class="resource-meta">
+                    <span class="difficulty beginner">Beginner</span>
+                </div>
+                <h3>W3Schools CSS3 Tutorial</h3>
+                <p>Beginner-friendly tutorials with interactive examples and "Try it Yourself" editor. Perfect for hands-on learning.</p>
+                <a href="https://www.w3schools.com/css/" target="_blank" class="resource-link">Learn at W3Schools</a>
+            </div>
+            <div class="resource-card">
+                <div class="resource-meta">
+                    <span class="difficulty beginner">Beginner</span>            
+                </div>
+                <h3>freeCodeCamp</h3>
+                <p>This Responsive Web Design Certification teaches CSS3 for design. Build projects while learning modern CSS techniques.</p>
+                <a href="https://www.freecodecamp.org/learn/responsive-web-design/" target="_blank" class="resource-link">Start Learning</a>
+            </div>
+               <div class="resource-card">
+                <div class="resource-meta">
+                    <span class="difficulty beginner">Beginner</span>
+                </div>
+                <h3>SoloLearn CSS3 Course</h3>
+                <p>CSS makes websites look beautiful. Learn visual design, layouts, and responsive techniques that work with HTML and JavaScript.</p>
+                <a href="https://www.sololearn.com/en/learn/courses/css-introduction" target="_blank" class="resource-link">Start Learning</a>
+            </div>
+
+            <div class="resource-card">
+                <div class="resource-meta">
+                    <span class="difficulty intermediate">Intermediate</span>
+                </div>
+                <h3>TutorialsPoint – CSS3 Tutorial</h3>
+                <p>Comprehensive CSS tutorial covering everything from basic concepts to advanced techniques like flexbox, grid, and animations.</p>
+                <a href="https://www.tutorialspoint.com/css/css3_tutorial.htm" target="_blank" class="resource-link">Start Learning</a>
+            </div>
+
+            <div class="resource-card">
+                <div class="resource-meta">
+                    <span class="difficulty intermediate">Intermediate</span>
+                </div>
+                <h3>Learn CSS by Web.dev (Google)</h3>
+                <p>An evergreen CSS course and reference to level up your web styling expertise with modern techniques and best practices.</p>
+                <a href="https://web.dev/learn/css/" target="_blank" class="resource-link">Start Learning</a>
+            </div>
+
+            <div class="resource-card">
+                <div class="resource-meta">
+                    <span class="difficulty advanced">Advanced</span>
+                </div>
+                <h3>MDN Web Docs (Best Reference)</h3>
+                <p>Comprehensive CSS documentation and guides. The definitive resource for web developers of all skill levels.</p>
+                <a href="https://developer.mozilla.org/en-US/docs/Web/CSS" target="_blank" class="resource-link">Start Learning</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

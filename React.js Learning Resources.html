@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>React Learning Resources - Modern UI</title>
+    <style>
+        :root {
+            --primary: #035a6d;
+            --primary-dark: #04a0af;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text: #04a0af;
+            --text-light: #64748b;
+            --radius: 14px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Inter", sans-serif;
+        }
+
+        body {
+            background: var(--bg);
+            padding: 40px 20px;
+            color: var(--text);
+        }
+
+        /* Header */
+        .header {
+            max-width: 900px;
+            margin: 0 auto 40px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.8rem;
+            font-weight: 800;
+            color: var(--primary-dark);
+        }
+
+        .header p {
+            margin-top: 12px;
+            color: var(--text-light);
+            font-size: 1.15rem;
+        }
+
+        /* Category Title */
+        .category-title {
+            max-width: 1200px;
+            margin: 0 auto 25px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .category-title span {
+            font-size: 2rem;
+            padding: 14px;
+            background: var(--primary);
+            color: white;
+            border-radius: var(--radius);
+        }
+
+        .category-title h2 {
+            font-size: 1.9rem;
+            font-weight: 700;
+        }
+
+        /* Resource Grid */
+        .resources-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 28px;
+        }
+
+        /* Cards */
+        .resource-card {
+            background: var(--card-bg);
+            padding: 28px;
+            border-radius: var(--radius);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            border-left: 4px solid #04a0af;
+        }
+
+        .resource-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+        }
+
+        .resource-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+        }
+
+        .difficulty {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .beginner {
+            background: #d1fae5;
+            color: #15803d;
+        }
+
+        .intermediate {
+            background: #dbeafe;
+            color: #04a0af;
+        }
+
+        .advanced {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+
+        .resource-type {
+            color: var(--text-light);
+        }
+
+        .resource-card h3 {
+            margin-bottom: 10px;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .resource-card p {
+            margin-bottom: 18px;
+            color: var(--text-light);
+            line-height: 1.5;
+        }
+
+        /* Feature tags */
+        .features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .feature-tag {
+            background: #e0f2fe;
+            padding: 6px 10px;
+            font-size: 0.75rem;
+            color: #a9c8d8;
+            border-radius: 6px;
+        }
+
+        /* Button */
+        .resource-link {
+            display: inline-block;
+            width: 100%;
+            text-align: center;
+            padding: 12px;
+            background: var(--primary);
+            color: white;
+            border-radius: var(--radius);
+            text-decoration: none;
+            font-weight: 600;
+            transition: background 0.2s ease;
+        }
+
+        .resource-link:hover {
+            background: var(--primary-dark);
+        }
+
+        @media (max-width: 600px) {
+            .header h1 {
+                font-size: 2.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="category-title">
+        <span>⚛️</span>
+        <h2>Tutorials & Learning Platforms</h2>
+    </div>
+
+    <div class="resources-grid">
+
+              <!-- CARD 1 -->
+        <div class="resource-card">
+            <div class="resource-meta">
+                  <span class="difficulty beginner">Beginner</span>
+            </div>
+
+            <h3>W3Schools React Tutorial</h3>
+            <p>React builds the parts of a website users see and interact with, focusing on fast and efficient UI creation.</p>
+            <a href="https://www.w3schools.com/react/" target="_blank" class="resource-link">Start Learning</a>
+        </div>
+
+        <!-- CARD 2 -->
+        <div class="resource-card">
+            <div class="resource-meta">
+                <span class="difficulty beginner">Beginner</span>
+            </div>
+
+            <h3>React Official Documentation</h3>
+            <p>The official React docs with interactive examples and step-by-step fundamentals.</p>
+            <a href="https://react.dev" target="_blank" class="resource-link">Start Learning</a>
+        </div>
+
+        <!-- CARD 3 -->
+        <div class="resource-card">
+            <div class="resource-meta">
+                <span class="difficulty beginner">Beginner</span>
+            </div>
+
+            <h3>Scrimba React Course</h3>
+            <p>Hands-on interactive React lessons where you can edit code directly in the browser.</p>
+
+            <a href="https://scrimba.com/learn/learnreact" target="_blank" class="resource-link">Start Learning</a>
+        </div>
+
+        <!-- CARD 4 -->
+        <div class="resource-card">
+            <div class="resource-meta">
+                <span class="difficulty beginner">Beginner</span>
+            </div>
+
+            <h3>freeCodeCamp React Course</h3>
+            <p>Build front-end applications with React and Redux. Complete projects and earn certifications.</p>
+
+            <a href="https://www.freecodecamp.org/learn/front-end-development-libraries/#react" target="_blank" class="resource-link">Start Learning</a>
+        </div>
+
+
+         <!-- CARD 5 -->
+        <div class="resource-card">
+            <div class="resource-meta">
+                <span class="difficulty intermediate">Intermediate</span>
+            </div>
+
+            <h3>React Patterns</h3>
+            <p>Learn advanced React patterns, performance optimization, and state management strategies.</p>
+            <a href="https://reactpatterns.com/" target="_blank" class="resource-link">Start Learning</a>
+        </div>
+
+        <!-- CARD 6 -->
+        <div class="resource-card">
+            <div class="resource-meta">
+                <span class="difficulty intermediate">Intermediate</span>
+            </div>
+
+            <h3>Codecademy React Course</h3>
+            <p>Learn how to use React to create interactive UIs with components, JSX, and the virtual DOM.</p>
+
+            <a href="https://www.codecademy.com/learn/react-101" target="_blank" class="resource-link">Start Learning</a>
+        </div>
+
+        <!-- CARD 7 -->
+        <div class="resource-card">
+            <div class="resource-meta">
+                <span class="difficulty intermediate">Intermediate</span>
+            </div>
+
+            <h3>React - The Complete Guide</h3>
+            <p>Dive in and learn React.js from scratch with hands-on projects and real-world examples.</p>
+
+            <a href="https://www.udemy.com/course/react-the-complete-guide-incl-redux/" target="_blank" class="resource-link">Start Learning</a>
+        </div>
+
+         <!-- CARD 8 -->
+        <div class="resource-card">
+            <div class="resource-meta">
+                <span class="difficulty advanced">Advanced</span>
+            </div>
+
+            <h3>React Patterns</h3>
+            <p>Learn advanced React patterns, performance optimization, and state management strategies.</p>
+            <a href="https://reactpatterns.com/" target="_blank" class="resource-link">Start Learning</a>
+        </div>
+
+        <!-- CARD 9 -->
+        <div class="resource-card">
+            <div class="resource-meta">
+                <span class="difficulty advanced">Advanced</span>
+            </div>
+
+            <h3>React TypeScript Cheatsheet</h3>
+            <p>Comprehensive guide for using React with TypeScript, from basic to advanced patterns.</p>
+            <a href="https://react-typescript-cheatsheet.netlify.app/" target="_blank" class="resource-link">Start Learning</a>
+        </div>
+    </div>
+</body>
+</html>
