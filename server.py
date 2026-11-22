@@ -14,7 +14,7 @@ from urllib.parse import parse_qs, unquote, urlsplit
 ROOT = Path(__file__).resolve().parent
 DATABASE = ROOT / "code-learn.sqlite3"
 TEMPLATE = (ROOT / "index.html").read_text(encoding="utf-8")
-PUBLIC_TEMPLATE = re.sub(r"<!-- PRIVATE START -->.*?<!-- PRIVATE END -->", "", TEMPLATE, flags=re.S)
+CODING_PAGE = (ROOT / "_server" / "coding.html").read_text(encoding="utf-8")
 LESSONS = {
     "HTML5 Learning Resource.html", "CSS3 Learning Resource.html",
     "JavaScript Learning Resource.html", "React.js Learning Resources.html",
@@ -75,7 +75,15 @@ class Handler(BaseHTTPRequestHandler):
         return hashlib.sha256(cookie.value.encode()).hexdigest() if cookie else ""
 
     def render(self, page, signed_in=False, message="", section=""):
-        html = TEMPLATE if signed_in and page == "coding" else PUBLIC_TEMPLATE
+        html = TEMPLATE.replace('<body class="static-site">', '<body>')
+        html = html.replace('href="#home"', 'href="/"').replace('href="#about"', 'href="/about"')
+        html = re.sub(
+            r'href="#learning-access" data-route="(\w+)"(?: data-section="([\w-]+)")?',
+            lambda match: f'href="{learning_url(match[2]) if match[1] == "coding" else "/" + match[1]}"',
+            html,
+        )
+        if signed_in and page == "coding":
+            html = html.replace("<!-- CODING PAGE -->", CODING_PAGE)
         html = html.replace(f'id="{page}" class="page"', f'id="{page}" class="page active"')
         if signed_in:
             html = re.sub(
