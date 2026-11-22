@@ -116,16 +116,17 @@ main { flex: 1; padding-block: clamp(1.5rem, 4vw, 3rem); }
 .page { display: none; }
 .page.active { display: block; }
 
-.static-site #home,
-.static-site :is(#about, #learning-access):target {
+.static-site:not(.browser-demo) #home,
+.static-site:not(.browser-demo) :is(#about, #learning-access):target {
     display: block;
 }
 
-.static-site main:has(:is(#about, #learning-access):target) #home {
+.static-site:not(.browser-demo) main:has(:is(#about, #learning-access):target) #home {
     display: none;
 }
 
 .static-site .page { scroll-margin-top: 1rem; }
+.browser-demo .auth-buttons [hidden] { display: none; }
 
 h1, h2, h3 {
     margin: 0;
@@ -157,10 +158,10 @@ p { color: var(--muted); }
 }
 
 .hero-actions { flex-wrap: wrap; }
-.hero-actions .btn-register { background: #c6d7ff; color: #102554; }
-.hero-actions .btn-register:hover { background: white; }
-.hero-actions .btn-login { color: white; border-color: #8398bc; }
-.hero-actions .btn-login:hover { background: #21385f; }
+.hero-section .hero-actions .btn-register { background: #c6d7ff; color: #102554; }
+.hero-section .hero-actions .btn-register:hover { background: white; }
+.hero-section .hero-actions .btn-login { color: white; border-color: #8398bc; }
+.hero-section .hero-actions .btn-login:hover { background: #21385f; }
 
 .code-preview {
     min-width: 0;

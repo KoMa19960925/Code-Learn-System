@@ -19,7 +19,7 @@ BIND_HOST = os.environ.get("CODE_LEARN_HOST", "127.0.0.1")
 PORT = int(os.environ.get("PORT", "8000"))
 SECURE_COOKIES = os.environ.get("CODE_LEARN_SECURE_COOKIES", "1" if BIND_HOST != "127.0.0.1" else "0") == "1"
 TEMPLATE = (ROOT / "index.html").read_text(encoding="utf-8")
-CODING_PAGE = ROOT / "_server" / "coding.html"
+CODING_PAGE = ROOT / "coding-content.html"
 LESSONS = {
     "HTML5 Learning Resource.html", "CSS3 Learning Resource.html",
     "JavaScript Learning Resource.html", "React.js Learning Resources.html",

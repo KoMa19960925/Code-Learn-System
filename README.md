@@ -9,7 +9,7 @@ Home and About are public. Create an account and log in to access Coding Topics 
 
 ## GitHub Pages
 
-The static site shows Home and About. Registration, login, and protected lessons are available through the Python server above. The GitHub Pages Jekyll build excludes lesson files and the server-side coding template.
+The static site includes a browser-only portfolio demo. Register and log in with demo credentials to unlock Coding Topics in the interface. Accounts are stored in the current browser and lesson files published by GitHub Pages are public. The Python server enforces session checks on its own lesson URLs.
 
 For public login, run the Python app on an HTTPS host. Set the start command to `python server.py`, set `CODE_LEARN_HOST=0.0.0.0`, and set `CODE_LEARN_DATABASE` to the SQLite file path on a persistent disk. The app reads the host-provided `PORT` and uses secure session cookies in hosted mode.
 
