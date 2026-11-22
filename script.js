@@ -1,5 +1,5 @@
 // Function to show the selected page and hide others
-function showPage(pageId) {
+function showPage(pageId, sectionId) {
     // Hide all pages
     const pages = document.querySelectorAll('.page');
     pages.forEach(page => {
@@ -10,9 +10,15 @@ function showPage(pageId) {
     document.getElementById(pageId).classList.add('active');
     
     // Scroll to top when changing pages
-    window.scrollTo(0, 0);
+    if (sectionId) {
+        const heading = document.querySelector(`#${sectionId} h2`);
+        heading.tabIndex = -1;
+        heading.focus();
+        heading.scrollIntoView();
+    } else {
+        window.scrollTo(0, 0);
+    }
 }
-
 // Form submission handlers
 document.addEventListener('DOMContentLoaded', function() {
     // Login form handler
@@ -93,7 +99,6 @@ function simulateLogin(email, password) {
         showPage('home');
     }, 1500);
 }
-
 // Simulate registration process
 function simulateRegistration(name, email, password) {
     // Show loading state
@@ -118,46 +123,11 @@ function simulateRegistration(name, email, password) {
         showPage('home');
     }, 1500);
 }
-
-// Add some interactive features to topic cards
-document.addEventListener('DOMContentLoaded', function() {
-    const topicCards = document.querySelectorAll('.topic-card');
-    
-    topicCards.forEach(card => {
-        card.addEventListener('mouseenter', function() {
-            this.style.transform = 'translateY(-5px) scale(1.02)';
-        });
-        
-        card.addEventListener('mouseleave', function() {
-            this.style.transform = 'translateY(0) scale(1)';
-        });
-        
-        // Add click animation
-        card.addEventListener('click', function() {
-            this.style.transform = 'scale(0.95)';
-            setTimeout(() => {
-                this.style.transform = 'scale(1)';
-            }, 150);
-        });
-    });
-});
-
 // Add form input enhancements
 document.addEventListener('DOMContentLoaded', function() {
     const formInputs = document.querySelectorAll('input, textarea');
     
     formInputs.forEach(input => {
-        // Add focus effect
-        input.addEventListener('focus', function() {
-            this.style.borderColor = '#3498db';
-            this.style.boxShadow = '0 0 0 2px rgba(52, 152, 219, 0.2)';
-        });
-        
-        input.addEventListener('blur', function() {
-            this.style.borderColor = '#ddd';
-            this.style.boxShadow = 'none';
-        });
-        
         // Add real-time validation for email fields
         if (input.type === 'email') {
             input.addEventListener('input', function() {
@@ -187,7 +157,6 @@ function isValidEmail(email) {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
 }
-
 // Password strength indicator (optional enhancement)
 function checkPasswordStrength(password) {
     let strength = 0;

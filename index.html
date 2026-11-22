@@ -11,15 +11,15 @@
     <header>
         <div class="container">
             <div class="header-content">
-                <div class="logo">
-                    <i class="fas fa-code"></i>
-                    Code<span>Learn</span>System
-                </div>
+                <a class="logo" href="#" onclick="showPage('home'); return false;">
+                    <span class="logo-mark" aria-hidden="true">&lt;/&gt;</span>
+                    <span>Code Learn System</span>
+                </a>
                 <nav>
                     <ul>
-                        <li><a href="#" onclick="showPage('home')"><i class="fas fa-home"></i> Home</a></li>
-                        <li><a href="#" onclick="showPage('about')"><i class="fas fa-info-circle"></i> About</a></li>
-                        <li><a href="#" onclick="showPage('coding')"><i class="fas fa-laptop-code"></i> Coding Topics</a></li>
+                        <li><a href="#" onclick="showPage('home'); return false;"><i class="fas fa-home"></i> Home</a></li>
+                        <li><a href="#" onclick="showPage('about'); return false;"><i class="fas fa-info-circle"></i> About</a></li>
+                        <li><a href="#" onclick="showPage('coding'); return false;"><i class="fas fa-laptop-code"></i> Coding Topics</a></li>
                     </ul>
                 </nav>
                 <div class="auth-buttons">
@@ -35,60 +35,61 @@
         <!-- Home Page -->
         <section id="home" class="page active">
             <div class="hero-section">
-                <h1>Welcome to Code Learn System</h1>
-                <p>Whether you're a beginner or an experienced developer, our platform provides structured learning paths for essential coding topics with hands-on projects and real-world examples.</p>
+                <div class="hero-copy">
+                    <h1>Learn to code.<br>Build something real.</h1>
+                    <p>Follow practical learning paths in frontend development, backend development, and design.</p>
+                    <div class="hero-actions">
+                        <button type="button" class="btn btn-register" onclick="showPage('coding')">Explore coding topics</button>
+                        <button type="button" class="btn btn-login" onclick="showPage('register')">Create an account</button>
+                    </div>
+                </div>
+                <figure class="code-preview">
+                    <figcaption>hello.js</figcaption>
+                    <pre><code><span class="code-keyword">function</span> greet(name) {
+  <span class="code-keyword">return</span> <span class="code-string">"Hello, "</span> + name;
+}
 
-                 <div class="cta-section">
-                <h2>Ready to Start Your Coding Journey?</h2>
-                <p>Join thousands of developers who have accelerated their careers with Code Learn System</p>
-                <button class="btn btn-register" onclick="showPage('register')">Get Started for learn</button>
+console.log(greet(<span class="code-string">"developer"</span>));
+<span class="code-comment">// Hello, developer</span></code></pre>
+                </figure>
             </div>
-            
+
             <h2>Featured Learning Paths</h2>
             <div class="topics-grid">
-                <div class="topic-card" onclick="showPage('coding')">
-                    <div class="topic-icon">
-                        <i class="fas fa-paint-brush"></i>
-                    </div>
+                <article class="topic-card">
                     <h3>Frontend Development</h3>
-                    <p>Master HTML, CSS, JavaScript and modern frameworks to build interactive and responsive web applications.</p>
+                    <p>Build responsive, interactive websites with HTML, CSS, JavaScript, and React.</p>
                     <div class="topic-tags">
                         <span class="tag">HTML5</span>
                         <span class="tag">CSS3</span>
                         <span class="tag">JavaScript</span>
                         <span class="tag">React.js</span>
-
                     </div>
-                </div>
-                <div class="topic-card" onclick="showPage('coding')">
-                    <div class="topic-icon">
-                        <i class="fas fa-server"></i>
-                    </div>
-
+                    <button type="button" class="path-link" onclick="showPage('coding', 'frontend-section')">Explore frontend <span aria-hidden="true">&rarr;</span></button>
+                </article>
+                <article class="topic-card">
                     <h3>Backend Development</h3>
-                    <p>Learn server-side programming, APIs, databases, authentication, and deployment strategies.</p>
+                    <p>Learn server-side programming, APIs, databases, and authentication.</p>
                     <div class="topic-tags">
                         <span class="tag">Node.js</span>
                         <span class="tag">Python</span>
                         <span class="tag">Java</span>
                     </div>
+                    <button type="button" class="path-link" onclick="showPage('coding', 'backend-section')">Explore backend <span aria-hidden="true">&rarr;</span></button>
+                </article>
+                <article class="topic-card">
+                    <h3>Design Tools &amp; Resources</h3>
+                    <p>Explore tools for interface design, graphics, and prototyping.</p>
+                    <div class="topic-tags">
+                        <span class="tag">Canva</span>
+                        <span class="tag">Figma</span>
+                        <span class="tag">Photopea</span>
+                        <span class="tag">Inkscape</span>
+                        <span class="tag">Pixlr</span>
                     </div>
-                
-                <div class="topic-card" onclick="showPage('coding')">
-    <div class="topic-icon">
-        <i class="fas fa-palette"></i>
-    </div>
-    <h3>Design Tools & Resources</h3>
-    <p>A comprehensive collection of essential design tools for developers, designers, and creators.</p>
-    <div class="topic-tags">
-        <span class="tag">Canva</span>
-        <span class="tag">Figma</span>
-        <span class="tag">Photopea</span>
-        <span class="tag">Inkscape</span>
-        <span class="tag">Pixlr</span>
-    </div>
-</div>
-            
+                    <button type="button" class="path-link" onclick="showPage('coding', 'design-section')">Explore design tools <span aria-hidden="true">&rarr;</span></button>
+                </article>
+            </div>
         </section>
 
         <!-- Login Page -->
@@ -111,8 +112,9 @@
                         </div>
                     </div>
                     <button type="submit" class="btn btn-primary">Login to Account</button>
+                </form>
                 <div class="form-footer">
-                    <p>Don't have an account? <a href="#" onclick="showPage('register')">Create one here</a></p>
+                    <p>Don't have an account? <a href="#" onclick="showPage('register'); return false;">Create one here</a></p>
                 </div>
             </div>
         </section>
@@ -167,7 +169,7 @@
                     <button type="submit" class="btn btn-primary">Create Account</button>
                 </form>
                 <div class="form-footer">
-                    <p>Already have an account? <a href="#" onclick="showPage('login')">Login here</a></p>
+                    <p>Already have an account? <a href="#" onclick="showPage('login'); return false;">Login here</a></p>
                 </div>
             </div>
         </section>
@@ -334,7 +336,10 @@
                         </div>
 
 
-                         <div class="topic-section" id="frontend-section">
+                    </div>
+                </div>
+
+                <div class="topic-section" id="design-section">
                     <h2><i class="fas fa-paint-brush"></i>  Design Tools & Resources</h2>
                     <div class="topics-grid">
                         <div class="topic-card detailed">
@@ -355,6 +360,8 @@
                 </div>
             </div>
         </section>
+
+    </main>
 
     <script src="script.js"></script>
 </body>
