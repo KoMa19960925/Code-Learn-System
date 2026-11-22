@@ -3,14 +3,15 @@ import hmac
 from contextlib import closing
 from html import escape
 from http.cookies import CookieError, SimpleCookie
-from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+from http import HTTPStatus
 import os
 from pathlib import Path
 import re
 import secrets
 import sqlite3
 import time
-from urllib.parse import parse_qs, unquote, urlsplit
+from urllib.parse import parse_qs, quote, unquote, urlsplit
+from wsgiref.simple_server import make_server
 
 ROOT = Path(__file__).resolve().parent
 DATABASE = Path(os.environ.get("CODE_LEARN_DATABASE", ROOT / "code-learn.sqlite3"))
@@ -51,19 +52,27 @@ def learning_url(section):
     return f"/coding?section={section}#{section}" if section in SECTIONS else "/coding"
 
 
-class Handler(BaseHTTPRequestHandler):
+class Request:
+    def __init__(self, environ):
+        path = quote(environ["PATH_INFO"].encode("latin-1"), safe="/")
+        self.path = path + "?" + environ.get("QUERY_STRING", "")
+        self.environ = environ
+
     def send_content(self, content, content_type="text/html; charset=utf-8", status=200, headers=()):
         if isinstance(content, str):
             content = content.encode("utf-8")
-        self.send_response(status)
-        self.send_header("Content-Type", content_type)
-        self.send_header("Content-Length", str(len(content)))
-        self.send_header("Cache-Control", "no-store")
-        self.send_header("X-Content-Type-Options", "nosniff")
-        for key, value in headers:
-            self.send_header(key, value)
-        self.end_headers()
-        self.wfile.write(content)
+        self.status = f"{status} {HTTPStatus(status).phrase}"
+        self.headers = [
+            ("Content-Type", content_type),
+            ("Content-Length", str(len(content))),
+            ("Cache-Control", "no-store"),
+            ("X-Content-Type-Options", "nosniff"),
+            *headers,
+        ]
+        self.body = content
+
+    def send_error(self, status):
+        self.send_content(HTTPStatus(status).phrase, "text/plain; charset=utf-8", status)
 
     def redirect(self, location, cookie=None):
         headers = [("Location", location)]
@@ -73,7 +82,7 @@ class Handler(BaseHTTPRequestHandler):
 
     def session_token(self):
         try:
-            cookie = SimpleCookie(self.headers.get("Cookie", "")).get(COOKIE)
+            cookie = SimpleCookie(self.environ.get("HTTP_COOKIE", "")).get(COOKIE)
         except CookieError:
             return ""
         return hashlib.sha256(cookie.value.encode()).hexdigest() if cookie else ""
@@ -157,14 +166,14 @@ class Handler(BaseHTTPRequestHandler):
             self.send_error(404)
             return
         # Only accept form submissions initiated on this site.
-        if self.headers.get("Sec-Fetch-Site") == "cross-site":
+        if self.environ.get("HTTP_SEC_FETCH_SITE") == "cross-site":
             self.send_error(403)
             return
         try:
-            size = int(self.headers.get("Content-Length", "0"))
+            size = int((self.environ.get("CONTENT_LENGTH") or "0"))
             if not 0 <= size <= 8192:
                 raise ValueError
-            fields = parse_qs(self.rfile.read(size).decode(), max_num_fields=10)
+            fields = parse_qs(self.environ["wsgi.input"].read(size).decode(), max_num_fields=10)
         except ValueError:
             self.send_error(400)
             return
@@ -214,14 +223,26 @@ class Handler(BaseHTTPRequestHandler):
         next_section = f"&section={section}" if section in SECTIONS else ""
         self.redirect("/login?registered=1" + next_section)
 
-    @staticmethod
-    def cookie(token, age):
-        secure = "; Secure" if SECURE_COOKIES else ""
+    def cookie(self, token, age):
+        secure = "; Secure" if SECURE_COOKIES or self.environ["wsgi.url_scheme"] == "https" else ""
         return f"{COOKIE}={token}; Path=/; HttpOnly; SameSite=Lax; Max-Age={age}{secure}"
+
+
+def application(environ, start_response):
+    request = Request(environ)
+    method = environ["REQUEST_METHOD"]
+    if method in {"GET", "HEAD"}:
+        request.do_GET()
+    elif method == "POST":
+        request.do_POST()
+    else:
+        request.send_content("Method Not Allowed", "text/plain; charset=utf-8", 405, [("Allow", "GET, HEAD, POST")])
+    start_response(request.status, request.headers)
+    return [b"" if method == "HEAD" else request.body]
 
 
 if __name__ == "__main__":
     initialize()
-    with ThreadingHTTPServer((BIND_HOST, PORT), Handler) as server:
+    with make_server(BIND_HOST, PORT, application) as server:
         print(f"Code Learn System listening on {BIND_HOST}:{server.server_port}", flush=True)
         server.serve_forever()
