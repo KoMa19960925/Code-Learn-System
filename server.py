@@ -4,6 +4,7 @@ from contextlib import closing
 from html import escape
 from http.cookies import CookieError, SimpleCookie
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+import os
 from pathlib import Path
 import re
 import secrets
@@ -12,7 +13,10 @@ import time
 from urllib.parse import parse_qs, unquote, urlsplit
 
 ROOT = Path(__file__).resolve().parent
-DATABASE = ROOT / "code-learn.sqlite3"
+DATABASE = Path(os.environ.get("CODE_LEARN_DATABASE", ROOT / "code-learn.sqlite3"))
+BIND_HOST = os.environ.get("CODE_LEARN_HOST", "127.0.0.1")
+PORT = int(os.environ.get("PORT", "8000"))
+SECURE_COOKIES = os.environ.get("CODE_LEARN_SECURE_COOKIES", "1" if BIND_HOST != "127.0.0.1" else "0") == "1"
 TEMPLATE = (ROOT / "index.html").read_text(encoding="utf-8")
 CODING_PAGE = (ROOT / "_server" / "coding.html").read_text(encoding="utf-8")
 LESSONS = {
@@ -76,6 +80,7 @@ class Handler(BaseHTTPRequestHandler):
 
     def render(self, page, signed_in=False, message="", section=""):
         html = TEMPLATE.replace('<body class="static-site">', '<body>')
+        html = html.replace('    <script src="pages-navigation.js" defer></script>\n', '')
         html = html.replace('href="#home"', 'href="/"').replace('href="#about"', 'href="/about"')
         html = re.sub(
             r'href="#learning-access" data-route="(\w+)"(?: data-section="([\w-]+)")?',
@@ -211,11 +216,12 @@ class Handler(BaseHTTPRequestHandler):
 
     @staticmethod
     def cookie(token, age):
-        return f"{COOKIE}={token}; Path=/; HttpOnly; SameSite=Lax; Max-Age={age}"
+        secure = "; Secure" if SECURE_COOKIES else ""
+        return f"{COOKIE}={token}; Path=/; HttpOnly; SameSite=Lax; Max-Age={age}{secure}"
 
 
 if __name__ == "__main__":
     initialize()
-    print("Code Learn System is running at http://127.0.0.1:8000", flush=True)
-    with ThreadingHTTPServer(("127.0.0.1", 8000), Handler) as server:
+    with ThreadingHTTPServer((BIND_HOST, PORT), Handler) as server:
+        print(f"Code Learn System listening on {BIND_HOST}:{server.server_port}", flush=True)
         server.serve_forever()
